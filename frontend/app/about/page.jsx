@@ -70,9 +70,9 @@ const Dashboard = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/get-analysis-json");
+      const response = await fetch("http://localhost:5000/api/news/get-analysis-json");
       const additionalResponse = await fetch(
-        "http://localhost:8000/get-analysis-json2"
+        "http://localhost:5000/api/news/get-analysis-json2"
       );
 
       if (response.status !== 200 || additionalResponse.status !== 200) {

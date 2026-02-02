@@ -1,5 +1,7 @@
 const ModifiedNews = require("../models/Modified");
 const UnModifiedNews = require("../models/UnModified");
+const fs = require("fs");
+const path = require("path");
 
 exports.fetchAllNews = async (req, res) => {
   const limit = parseInt(req.query.limit) || 20;
@@ -100,6 +102,77 @@ exports.findNews = async (req, res) => {
     return res.send(news);
   } catch (error) {
     console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+};
+
+exports.getAnalysisJson = async (req, res) => {
+  try {
+    const dataPath = path.join(__dirname, "../data.json");
+    if (fs.existsSync(dataPath)) {
+      const rawData = fs.readFileSync(dataPath, "utf8");
+      return res.json(JSON.parse(rawData));
+    } else {
+      return res.json({ ORG: [], PERSON: [], GPE: [] });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Internal Server Error");
+  }
+};
+
+exports.getAnalysisJson2 = async (req, res) => {
+  try {
+    const totalNewsCount = await ModifiedNews.countDocuments();
+    
+    // Aggregate top sources
+    const topSourcesAgg = await ModifiedNews.aggregate([
+      { $group: { _id: "$source", count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 10 }
+    ]);
+    const top_sources = {};
+    topSourcesAgg.forEach(item => {
+      if (item._id) {
+        top_sources[item._id] = item.count;
+      }
+    });
+
+    // Aggregate top ministries
+    const topMinistriesAgg = await ModifiedNews.aggregate([
+      { $unwind: "$ministry" },
+      { $group: { _id: "$ministry", count: { $sum: 1 } } },
+      { $sort: { count: -1 } }
+    ]);
+    const top_ministries = {};
+    topMinistriesAgg.forEach(item => {
+      if (item._id !== null && item._id !== undefined) {
+        top_ministries[item._id] = item.count;
+      }
+    });
+
+    // Aggregate sentiment
+    const sentimentAgg = await ModifiedNews.aggregate([
+      { $group: { _id: "$sentiment", count: { $sum: 1 } } }
+    ]);
+    const sentiment_analysis = { positive: 0, negative: 0, neutral: 0 };
+    sentimentAgg.forEach(item => {
+      if (item._id) {
+        const key = item._id.toLowerCase();
+        if (key in sentiment_analysis) {
+          sentiment_analysis[key] = item.count;
+        }
+      }
+    });
+
+    return res.json({
+      length_data: totalNewsCount,
+      top_sources,
+      top_ministries,
+      sentiment_analysis
+    });
+  } catch (error) {
+    console.error(error);
     return res.status(500).send("Internal Server Error");
   }
 };
