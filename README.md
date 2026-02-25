@@ -17,12 +17,6 @@ Our team is proud to have secured **FIRST PLACE 🥇** at the **DataQuest2024 Ha
 *   **Neel Shah**
 *   **Pankil Soni**
 *   **Sneh Shah**
-
-### Acknowledgements & Gratitude
-We are immensely grateful to:
-*   **Kumar Varsani**, **Priyank Bhavsar**, and **Hitesh Panchal** for their invaluable insights that were instrumental in shaping our approach to innovation.
-*   The organizers at **MSBC Group** and **Adani Institute of Digital Technology Management** for hosting such a well-organized and inspiring event.
-
 ---
 
 ## 📖 Table of Contents
@@ -30,6 +24,7 @@ We are immensely grateful to:
 - [Introduction](#introduction)
 - [What We Made](#what-we-made)
 - [Key Features](#key-features)
+- [Screenshots & Presentation](#screenshots--presentation)
 - [Technologies Used](#technologies-used)
 - [Architecture](#architecture)
 - [Installation & Setup](#installation--setup)
@@ -62,6 +57,39 @@ DemocraticNet is an end-to-end web application that aggregates articles and prov
 *   **Data Analytics Dashboard:** Visualize key statistics like sentiment distribution and top-reported ministries.
 *   **Role-Based access & Seeded Workflows:** Features specific views for different government ministries to monitor relevant news.
 *   **Fully-Documented API:** Provides clean JSON endpoints for third-party integration.
+
+---
+
+## 🖼️ Screenshots & Presentation
+
+You can view the project presentation here:
+*   [DemocraticNet Hackathon Presentation (PDF)](assets/presentation.pdf)
+
+### Application Screenshots
+
+#### 1. Login Page
+The secure entry point for authorized users and ministry personnel.
+![Login Page](assets/screenshots/login_page.png)
+
+#### 2. News Dashboard
+The main feed showing aggregated articles with real-time sentiment tags, ministry validation tags, and AI verification status.
+![News Dashboard](assets/screenshots/news_dashboard.png)
+
+#### 3. News Sorting & Filtering
+Interactive controls allowing users to sort by newest/oldest and filter by specific categories.
+![News Sorting](assets/screenshots/news_sorting.png)
+
+#### 4. News Validation Comparison
+Detailed side-by-side validation checks showing the official ministry validation versus AI-generated predictions.
+![News Validation Comparison](assets/screenshots/news_validation_list.png)
+
+#### 5. Clustered News Analytics Overview
+A comprehensive dashboard providing stats on news distributions by categories (organizations, persons, locations) and general sentiment analysis.
+![Analytics Overview](assets/screenshots/news_analytics_overview.png)
+
+#### 6. Geopolitical News Analytics
+Geographical news distribution analytics displaying trends across different locations (GPE) along with matching sentiment charts.
+![Geopolitical Analytics](assets/screenshots/news_geopolitical_analytics.png)
 
 ---
 
@@ -110,7 +138,6 @@ node seed.js
 # Start the Express server
 npm start
 ```
-The backend server will run on `http://localhost:5000`.
 
 ### 3. Frontend Setup
 ```bash
@@ -121,13 +148,12 @@ npm install
 # Run the development server
 npm run dev
 ```
-The frontend application will be available at `http://localhost:3000`.
 
 ---
 
 ## 📊 Usage
 
-1. Open your browser and navigate to `http://localhost:3000`.
+1. Open the application in your browser.
 2. View the homepage to see the latest articles, their validation status, and ministry assignments.
 3. Access the dashboard/about page to view interactive analysis charts, including sentiment trends and top ministries.
 
